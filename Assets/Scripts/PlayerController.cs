@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
     public float speed = 3;
     private IController controller;
     private new Camera camera;
+    private LevelController levelController;
 
     // Use this for initialization
     void Start()
     {
         controller = GetComponent<IController>();
+        levelController = FindObjectOfType<LevelController>();
         camera = Camera.main;
     }
 
@@ -29,6 +31,6 @@ public class PlayerController : MonoBehaviour
 
     public void Kill()
     {
-        Debug.Log("Dead");
+        levelController.Restart();
     }
 }

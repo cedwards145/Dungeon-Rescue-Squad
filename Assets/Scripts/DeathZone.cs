@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class DeathZone : MonoBehaviour
+public class DeathZone : Zone
 {
-    private Collider zoneCollider;
-
-    // Use this for initialization
-    void Start()
+    protected override void Start()
     {
-        zoneCollider = GetComponent<Collider>();
-        zoneCollider.isTrigger = true;
+        base.Start();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {

@@ -9,6 +9,12 @@ public class Door : MonoBehaviour
     public Transform closePosition;
     public Transform doorModel;
 
+    public float easingSpeed = 1;
+    private float easingProgress = 0;
+    private Easing.Ease ease;
+    private Easing.Ease easeIn;
+    private Easing.Ease easeOut;
+
     // Use this for initialization
     void Start()
     {
@@ -19,11 +25,17 @@ public class Door : MonoBehaviour
     {
         if (controllingSwitch.IsOn())
         {
-            doorModel.position = openPosition.position;
+            easingProgress = Mathf.Clamp(easingProgress + Time.deltaTime * easingSpeed, 0, 1);
         }
         else
         {
-            doorModel.position = closePosition.position;
+            easingProgress = Mathf.Clamp(easingProgress - Time.deltaTime * easingSpeed, 0, 1);
         }
+
+        float x = Easing.EaseOutCubic(closePosition.position.x, openPosition.position.x, easingProgress);
+        float y = Easing.EaseOutCubic(closePosition.position.y, openPosition.position.y, easingProgress);
+        float z = Easing.EaseOutCubic(closePosition.position.z, openPosition.position.z, easingProgress);
+
+        doorModel.position = new Vector3(x, y, z);
     }
 }

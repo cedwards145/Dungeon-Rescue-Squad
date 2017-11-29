@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WinZone : MonoBehaviour
+public class WinZone : Zone
 {
     public int numberOfPlayersRequired;
     private List<PlayerController> players;
-    private Collider zoneCollider;
 
-    // Use this for initialization
-    void Start()
+    protected override void Start()
     {
-        zoneCollider = GetComponent<Collider>();
-        zoneCollider.isTrigger = true;
+        base.Start();
         players = new List<PlayerController>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
+        base.OnTriggerEnter(other);
+        
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
@@ -31,8 +29,10 @@ public class WinZone : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected override void OnTriggerExit(Collider other)
     {
+        base.OnTriggerExit(other);
+
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
